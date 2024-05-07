@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:notes/services/note_service.dart';
 import 'package:notes/widgets/note_dialog.dart';
 
+
 class NoteListScreen extends StatefulWidget {
   const NoteListScreen({super.key});
+
 
   @override
   State<NoteListScreen> createState() => _NoteListScreenState();
 }
+
 
 class _NoteListScreenState extends State<NoteListScreen> {
   @override
@@ -33,8 +36,10 @@ class _NoteListScreenState extends State<NoteListScreen> {
   }
 }
 
+
 class NoteList extends StatelessWidget {
   const NoteList({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +47,7 @@ class NoteList extends StatelessWidget {
       stream: NoteService.getNoteList(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Text('Errorr : ${snapshot.error}');
+          return Text('Error: ${snapshot.error}');
         }
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -63,16 +68,11 @@ class NoteList extends StatelessWidget {
                         },
                       );
                     },
-                    title: Text(document['title']),
-                    subtitle: Text(document['description']),
+                    title: Text(document.title),
+                    subtitle: Text(document.description),
                     trailing: InkWell(
                       onTap: () {
-                        NoteService.deleteNote(document['id']);
-
-                        // FirebaseFirestore.instance
-                        //     .collection('notes')
-                        //     .doc(document.id)
-                        //     .delete();
+                        NoteService.deleteNote(document);
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 10),
